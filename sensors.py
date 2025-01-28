@@ -72,9 +72,9 @@ class UltrasoundSensor:
         dist_t = sensity_t * self.max_range / self.adc_resolution  # Convert to distance in cm
         return dist_t
 
-    ## Run the sensor for 1 second and return 
+    ## Run the sensor for 0.1 second and return 
     ## the average distance for accuracy
-    def run(self):
+    def read_average_distance(self):
         start_time = time()
         distances = []
         while time() - start_time < 0.1:
@@ -89,13 +89,13 @@ class UltrasoundSensor:
 ## UltrasoundSensor class and run it
 
 # ultrasound_sensor = UltrasoundSensor(pin=26)
-# ultrasound_sensor.run()
+# ultrasound_sensor.read_average_distance()
 
 
 ### LINE FOLLOWING SENSOR ###
 
 ## This class is for a line following sensor
-## that returns 1 if the sensor is on white
+## read value function reads and returns 1 if the sensor is on white
 ## and 0 if it is on black
 
 class LineFollowingSensor:
