@@ -26,7 +26,7 @@ def drive_forward(sensors_state, left_motor, right_motor):
         '0001': ('forward', 0, 'forward', 0), #bad
         '0010': ('forward', 55, 'forward', 45), #correct to right
         '0011': ('forward', 55, 'forward', 45), #correct to right + possible turn right
-        '0100': ('forward', 55, 'forward', 55), #correct to left
+        '0100': ('forward', 45, 'forward', 55), #correct to left
         '0101': ('forward', 0, 'forward', 0), #bad
         '0110': ('forward', 70, 'forward', 70), #forward
         '0111': ('forward', 0, 'forward', 0), #possible turn right
