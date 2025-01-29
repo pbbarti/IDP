@@ -4,13 +4,37 @@ from time import sleep
 
 ### MOTOR MOTION ###
 
-## This class is for operating a motor
+## This class is for operating motors
 ## it allows to set the direction and speed of motor
 ## and make it act accordeingly
 ## also allows to turn off the motor
 
 
-class Motor:
+class Motor_Right:
+    def __init__(self, direction_pin, speed_pin):
+        self.m1Dir = Pin(direction_pin, Pin.OUT) # set motor direction !!! GPIO !!!
+        self.pwm1 = PWM(Pin(speed_pin)) # set speed !!! PWM PIN  !!!
+        self.pwm1.freq(1000) # set max frequency
+        self.pwm1.duty_u16(0) # set duty cycle
+
+    def set_motor(self, direction, speed):
+        if direction == "forward":
+            self.m1Dir.value(1) # forward = 0 reverse = 1 
+        elif direction == "reverse":
+            self.m1Dir.value(0)
+        else:
+            raise ValueError("Invalid direction. Use 'forward' or 'reverse'.")
+        
+        if 0 <= speed <= 100:
+            self.pwm1.duty_u16(int(65535 * speed / 100)) # speed range 0-100 motor 1
+        else:
+            raise ValueError("Invalid speed. Use a value between 0 and 100.")
+
+    def off(self):
+        self.pwm1.duty_u16(0)
+
+
+class Motor_Left:
     def __init__(self, direction_pin, speed_pin):
         self.m1Dir = Pin(direction_pin, Pin.OUT) # set motor direction !!! GPIO !!!
         self.pwm1 = PWM(Pin(speed_pin)) # set speed !!! PWM PIN  !!!
@@ -32,6 +56,7 @@ class Motor:
 
     def off(self):
         self.pwm1.duty_u16(0)
+
 
 
 ## How to set up for the Pico and run
