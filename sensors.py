@@ -11,7 +11,6 @@ from machine import Pin, ADC
 ## and returns the QR code message
 ## once the message is read
 
-
 class QRCodeReader:
     ## NOT INCORRECT CONNECTIONS WILL DESTROY THE SENSOR. CHECK WITH BENCH MULTIMETER BEFORE POWER/USE
     ## Red---3v3
@@ -57,7 +56,6 @@ class QRCodeReader:
 # qr_code_reader = QRCodeReader(i2c, 0x0C)
 # qr_code_reader.run()
 
-
 ### ULTRASOUND SENSOR ###
 
 class UltrasoundSensor:
@@ -82,7 +80,6 @@ class UltrasoundSensor:
             distances.append(distance)
             sleep(self.delay)
         average_distance = sum(distances) / len(distances)
-        #print(f"Average Distance: {average_distance:.2f} cm")
         return average_distance
 
 ## How to create an instance of the 
@@ -91,11 +88,11 @@ class UltrasoundSensor:
 # ultrasound_sensor = UltrasoundSensor(pin=26)
 # ultrasound_sensor.read_average_distance()
 
-
 ### LINE FOLLOWING SENSOR ###
 
 ## This class is for a line following sensor
-## read value function reads and returns 1 if the sensor is on white
+## read value function reads and 
+## returns 1 if the sensor is on white
 ## and 0 if it is on black
 
 class LineFollowingSensor:
@@ -104,9 +101,3 @@ class LineFollowingSensor:
 
     def read_value(self):
         return self.sensor_pin.value()
-
-## How to create an instance of the 
-## lineFollowingSensor class and run it
-
-# line_sensor = LineFollowingSensor(pin=13)  # Adjust the pin number according to your setup
-# line_sensor.read_value()

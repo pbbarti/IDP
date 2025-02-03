@@ -1,48 +1,37 @@
-from sensors import LineFollowingSensor
-from motors import Motor_Right, Motor_Left
-from motion import measure_sensors, drive_forward, move_forward_and_turn, stop_motors
+from motion import measure_sensors, drive_forward, move_forward_and_turn
 from time import sleep
 
-## This function takes a list of directions and navigates the robot through the maze of life (or the maze of the track)
+## This function takes a list of directions and navigates
+##  the robot through the maze of life (or the maze of the track)
+## it also takes in     
 
 def navigate(directions, left_motor, right_motor, sensors):
     for direction in directions:
         while True:
-            sensor_state = measure_sensors(*sensors)
-            drive_forward(sensor_state, left_motor, right_motor)
+            sensors_state = measure_sensors(*sensors)
+            drive_forward(sensors_state, left_motor, right_motor)
             
             # Convert sensor readings to a binary string
-            sensor_state_str = ''.join(map(str, sensor_state))
+            sensor_state_binary = ''.join(map(str, sensors_state))
             
             # Check for cross-road detection
-            if sensor_state_str in ['0011','0111','1100','1110','1111']:
-                stop_motors(left_motor, right_motor)
+            if sensor_state_binary in ['0011','0111','1100','1110','1111']:
+                left_motor.off() 
+                right_motor.off()
                 
                 if direction == 'straight':
                     # Move forward slightly to pass the cross-road
                     left_motor.set_motor("forward", 50)
                     right_motor.set_motor("forward", 50)
-                    sleep(1)  # Adjust this value based on calibration
-                    stop_motors(left_motor, right_motor)
+                    sleep(0.5)  # Adjust this value based on calibration
+                    left_motor.off() 
+                    right_motor.off()
                 elif direction == 'left':
-                    move_forward_and_turn('left', left_motor, right_motor)
+                    move_forward_and_turn('left', sensors_state, left_motor, right_motor)
                 elif direction == 'right':
-                    move_forward_and_turn('right', left_motor, right_motor)
+                    move_forward_and_turn('right', sensors_state, left_motor, right_motor)
                 
                 break  # Move to the next direction in the array
-
-# Example usage
-#right_motor = Motor_Right(direction_pin=7, speed_pin=6)
-#left_motor = Motor_Left(direction_pin=4, speed_pin=5)
-#sensors = [
-    #LineFollowingSensor(pin=21),
-    #LineFollowingSensor(pin=20),
-    #LineFollowingSensor(pin=19),
-    #LineFollowingSensor(pin=18)
-#]
-
-#directions = ['left', 'left', 'straight', 'left', 'left']
-#navigate(directions, left_motor, right_motor, sensors)
 
 
 ## All relevant paths
