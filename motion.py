@@ -1,4 +1,3 @@
-from sensors import LineFollowingSensor
 from time import sleep
 
 ## This function takes a list of sensors and returns a list of their values
