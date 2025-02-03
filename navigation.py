@@ -1,9 +1,9 @@
 from motion import measure_sensors, drive_forward, move_forward_and_turn
 from time import sleep
 
-## This function takes a list of directions and navigates
-##  the robot through the maze of life (or the maze of the track)
-## it also takes in     
+## This function takes a list of directions, motor instances
+## and array of sensor  instances and navigates
+## the robot through the maze of life (or the maze of the track) 
 
 def navigate(directions, left_motor, right_motor, sensors):
     for direction in directions:

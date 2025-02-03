@@ -54,59 +54,59 @@ def drive_forward(sensors_state, left_motor, right_motor):
 ## and right motor instance as arguments
 ## and turns the robot in place in the given direction
 
-#def turn_in_place(direction, left_motor, right_motor):
-    # Calibrated distance needed for a 180-degree turn
-    calibrated_distance = 180  # This value should be determined through calibration - !!!THIS NEEDS TO BE ADJUSTED WITH PHYSICAL CALIBRATION!!!
+# def turn_in_place(direction, left_motor, right_motor):
+#     # Calibrated distance needed for a 180-degree turn
+#     calibrated_distance = 180  # This value should be determined through calibration - !!!THIS NEEDS TO BE ADJUSTED WITH PHYSICAL CALIBRATION!!!
 
-    if direction == "right":
-        left_motor.set_motor("forward", 50)
-        right_motor.set_motor("reverse", 50)
-    elif direction == "left":
-        left_motor.set_motor("reverse", 50)
-        right_motor.set_motor("forward", 50)
-    else:
-        raise ValueError("Invalid direction. Use 'right' or 'left'.")
+#     if direction == "right":
+#         left_motor.set_motor("forward", 50)
+#         right_motor.set_motor("reverse", 50)
+#     elif direction == "left":
+#         left_motor.set_motor("reverse", 50)
+#         right_motor.set_motor("forward", 50)
+#     else:
+#         raise ValueError("Invalid direction. Use 'right' or 'left'.")
 
-    time_to_turn = calibrated_distance / 50  # Assuming 50 is the speed and distance is in distance unit
+#     time_to_turn = calibrated_distance / 50  # Assuming 50 is the speed and distance is in distance unit
 
-    sleep(time_to_turn)
+#     sleep(time_to_turn)
 
-    # Stop the motors after turning
-    left_motor.off()
-    right_motor.off()
+#     # Stop the motors after turning
+#     left_motor.off()
+#     right_motor.off()
 
 ## This function takes a direction, left motor instance, and right motor instance as arguments
 ## and turns the robot in place in the given direction
 ## then moves forward a bit after turning
 
-#def move_forward_and_turn(direction, left_motor, right_motor):
-    # Calibrated distance needed for a 90-degree turn
-    calibrated_turn_distance = 2  #!!!THIS NEEDS TO BE ADJUSTED WITH PHYSICAL CALIBRATION!!!
-    # Calibrated distance to move forward after turning
-    calibrated_forward_time = 0.45  #!!!THIS NEEDS TO BE ADJUSTED WITH PHYSICAL CALIBRATION!!!
-                                     # such that it moves forward a distance from sensors to axis
+# def move_forward_and_turn(direction, left_motor, right_motor):
+#     # Calibrated distance needed for a 90-degree turn
+#     calibrated_turn_distance = 2  #!!!THIS NEEDS TO BE ADJUSTED WITH PHYSICAL CALIBRATION!!!
+#     # Calibrated distance to move forward after turning
+#     calibrated_forward_time = 0.45  #!!!THIS NEEDS TO BE ADJUSTED WITH PHYSICAL CALIBRATION!!!
+#                                     # such that it moves forward a distance from sensors to axis
 
-    # Move forward first
-    left_motor.set_motor("forward", 50)
-    right_motor.set_motor("forward", 50)
-    sleep(calibrated_forward_time)
+#     # Move forward first
+#     left_motor.set_motor("forward", 50)
+#     right_motor.set_motor("forward", 50)
+#     sleep(calibrated_forward_time)
 
-    # Then turn in place
-    if direction == "right":
-        left_motor.set_motor("forward", 65)
-        right_motor.set_motor("reverse", 0)
-    elif direction == "left":
-        left_motor.set_motor("reverse", 0)
-        right_motor.set_motor("forward", 65)
-    else:
-        raise ValueError("Invalid direction. Use 'right' or 'left'.")
+#     # Then turn in place
+#     if direction == "right":
+#         left_motor.set_motor("forward", 65)
+#         right_motor.set_motor("reverse", 0)
+#     elif direction == "left":
+#         left_motor.set_motor("reverse", 0)
+#         right_motor.set_motor("forward", 65)
+#     else:
+#         raise ValueError("Invalid direction. Use 'right' or 'left'.")
 
-    # Calibrate the time needed to turn 90 degrees based on the distance
-    sleep(calibrated_turn_distance)
+#     # Calibrate the time needed to turn 90 degrees based on the distance
+#     sleep(calibrated_turn_distance)
 
-    # Stop the motors after turning
-    left_motor.off()
-    right_motor.off()
+#     # Stop the motors after turning
+#     left_motor.off()
+#     right_motor.off()
 
 def turn_in_place(direction, sensors_state, left_motor, right_motor):
     
@@ -131,7 +131,7 @@ def turn_in_place(direction, sensors_state, left_motor, right_motor):
     left_motor.off()
     right_motor.off()
 
-def move_forward_and_turn(direction, sensors_state, left_motor, right_motor)
+def move_forward_and_turn(direction, sensors_state, left_motor, right_motor):
     calibrated_forward_time = 0.45  # This value should be determined through calibration - !!!THIS NEEDS TO BE ADJUSTED WITH PHYSICAL CALIBRATION!!!
 
     # Move forward first
