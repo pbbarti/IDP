@@ -9,7 +9,7 @@ def navigate(directions, left_motor, right_motor, sensors):
     for direction in directions:
         while True:
             sensors_state = measure_sensors(*sensors)
-            drive_forward(sensors_state, left_motor, right_motor)
+            drive_forward(sensors_state, left_motor, right_motor,80)
             
             # Convert sensor readings to a binary string
             sensor_state_binary = ''.join(map(str, sensors_state))
@@ -23,18 +23,28 @@ def navigate(directions, left_motor, right_motor, sensors):
                     # Move forward slightly to pass the cross-road
                     left_motor.set_motor("forward", 50)
                     right_motor.set_motor("forward", 50)
-                    sleep(0.5)  # Adjust this value based on calibration
+                    sleep(0.6)  # Adjust this value based on calibration
                     left_motor.off() 
                     right_motor.off()
                 elif direction == 'left':
-                    move_forward_and_turn('left', sensors_state, left_motor, right_motor)
+                    move_forward_and_turn('left', sensors, left_motor, right_motor)
                 elif direction == 'right':
-                    move_forward_and_turn('right', sensors_state, left_motor, right_motor)
+                    move_forward_and_turn('right', sensors, left_motor, right_motor)
                 
                 break  # Move to the next direction in the array
 
 
 ## All relevant paths
+
+## NEEDS ADJUSTING + ADD TIMES FOR REVERSE AT EACH DEPO TO DROP-OFF
+
+## reversal times
+# destination D - 4s
+# destination C - 4.7s
+# destination B - 2.2s
+# desitnation A - 4s 
+
+    
 
 start_to_depot_1 = ['straight','right','right']
 depot_1_to_depot_2 = ['left','straight','straight','left']
