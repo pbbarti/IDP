@@ -22,14 +22,14 @@ def drive_forward(sensors_state, left_motor, right_motor, speed):
     # Define motor actions for each sensor state in a binary map   -  !!!THIS NEEDS TO BE ADJUSTED WITH PHYSICAL CALIBRATION!!!
     actions = {
         '0000': ('forward', 0, 'forward', 0), #bad
-        '0001': ('forward', 0, 'forward', 0), #bad
+        '0001': ('reverse', speed-20, 'reverse', speed), #retract with right wheel to try find path
         '0010': ('forward', speed, 'forward', speed-20), #correct to right
         '0011': ('forward', speed, 'forward', speed-20), #correct to right + possible turn right
         '0100': ('forward', speed-20, 'forward', speed), #correct to left
         '0101': ('forward', 0, 'forward', 0), #bad
         '0110': ('forward', speed, 'forward', speed), #forward
         '0111': ('forward', 0, 'forward', 0), #possible turn right
-        '1000': ('forward', 0, 'forward', 0), #bad
+        '1000': ('reverse', speed, 'reverse', speed -20), #retract with left wheel to try find path
         '1001': ('forward', 0, 'forward', 0), #bad
         '1010': ('forward', 0, 'forward', 0), #bad
         '1011': ('forward', 0, 'forward', 0), #bad
@@ -47,7 +47,10 @@ def drive_forward(sensors_state, left_motor, right_motor, speed):
     right_motor.set_motor(right_action, right_speed)
 
     # action delay
-    sleep(0.11)
+    if sensor_state_binary in ['0001','1000']:
+        sleep(0.2)
+    else: 
+        sleep(0.11)
 
 
 ## This function takes a direction, left motor instance

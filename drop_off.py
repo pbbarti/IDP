@@ -12,20 +12,12 @@ def drop_off(sensors, left_motor, right_motor, linear_actuator, leaving_directio
         
         # Check for cross-road detection
         if sensor_state_binary in ['1111','0111','1110']:
-             # Move forward through the cross-road
-            left_motor.set_motor("forward", 50)
-            right_motor.set_motor("forward", 50)
-            sleep(0.4)  # Adjust this value based on calibration
+            
             left_motor.off()
             right_motor.off()
-        if sensor_state_binary == '0000':
-            left_motor.off()
-            right_motor.off()
+            sleep(0.5) 
+            linear_actuator.set_actuator(-30)
             break
-    
-    sleep(0.5)  # Lag before retracting the linear actuator
-    # Fully retract the linear actuator
-    #linear_actuator.fully_retract()
     
     # Reverse a set distance
     left_motor.set_motor("reverse", 40)
@@ -33,4 +25,6 @@ def drop_off(sensors, left_motor, right_motor, linear_actuator, leaving_directio
     sleep(reverse_time)  # Adjust this value based on calibration
     left_motor.off()
     right_motor.off()
+    linear_actuator.set_actuator(30)
+    
     turn_in_place(leaving_direction, sensors, left_motor, right_motor)

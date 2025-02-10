@@ -15,7 +15,7 @@ def navigate(directions, left_motor, right_motor, sensors):
             sensor_state_binary = ''.join(map(str, sensors_state))
             
             # Check for cross-road detection
-            if sensor_state_binary in ['0011','0111','1100','1110','1111']:
+            if sensor_state_binary in ['0111','1110','1111']:
                 left_motor.off() 
                 right_motor.off()
                 

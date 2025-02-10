@@ -70,17 +70,6 @@ class UltrasoundSensor:
         dist_t = sensity_t * self.max_range / self.adc_resolution  # Convert to distance in cm
         return dist_t
 
-    ## Run the sensor for 0.1 second and return 
-    ## the average distance for accuracy
-    def read_average_distance(self):
-        start_time = time()
-        distances = []
-        while time() - start_time < 0.1:
-            distance = self.read_distance()
-            distances.append(distance)
-            sleep(self.delay)
-        average_distance = sum(distances) / len(distances)
-        return average_distance
 
 ## How to create an instance of the 
 ## UltrasoundSensor class and run it
