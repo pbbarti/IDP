@@ -64,15 +64,13 @@ def turn_in_place(direction, sensors, left_motor, right_motor):
     elif direction == "left":
         left_motor.set_motor("reverse", 50)
         right_motor.set_motor("forward", 50)
-    else:
-        raise ValueError("Invalid direction. Use 'right' or 'left'.")
 
-    sleep(1)
+    sleep(1.5)
 
     while True:
         sensors_state = measure_sensors(*sensors)
         sensor_state_binary = ''.join(map(str, sensors_state))
-        if sensor_state_binary in ['0100','0010']:
+        if sensor_state_binary in ['0100','0010','0110']:
             break
         sleep(0.11)  # Small delay
 
@@ -82,11 +80,11 @@ def turn_in_place(direction, sensors, left_motor, right_motor):
     right_motor.off()
 
 def move_forward_and_turn(direction, sensors, left_motor, right_motor):
-    calibrated_forward_time = 0.45  # This value should be determined through calibration - !!!THIS NEEDS TO BE ADJUSTED WITH PHYSICAL CALIBRATION!!!
+    calibrated_forward_time = 0.23  # This value should be determined through calibration - !!!THIS NEEDS TO BE ADJUSTED WITH PHYSICAL CALIBRATION!!!
 
     # Move forward first
-    left_motor.set_motor("forward", 50)
-    right_motor.set_motor("forward", 50)
+    left_motor.set_motor("forward", 100)
+    right_motor.set_motor("forward", 100)
     sleep(calibrated_forward_time)
 
     # Then turn in place until the sensors read '0100' or '0010' 

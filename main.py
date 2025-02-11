@@ -1,13 +1,13 @@
 from sensors import LineFollowingSensor, QRCodeReader, UltrasoundSensor
 from motors import Motor_Right, Motor_Left, Linear_Actuator
-from navigation import navigate
+from navigation import navigate,  routes, choose_route, leave_depot, start_area
 from motion import measure_sensors, drive_forward, turn_in_place
 from drop_off import drop_off
 from pick_up import pick_up
 from machine import Pin, I2C
 from time import sleep
 import time
-from navigationv2 import routes, choose_route, leave_depot
+
 
 # Create instances of Motors
 right_motor = Motor_Right(direction_pin=7, speed_pin=6)
@@ -44,7 +44,7 @@ button.irq(trigger=Pin.IRQ_RISING, handler=callback)
 while True:
     if interrupt_flag is 1:
         interrupt_flag = 0
-        # add function to move out of starting zone manually here
+        start_area(left_motor, right_motor, sensors)
         led.value(1)
         navigate(routes('start_to_depot_1'), left_motor, right_motor, sensors)
         for i in range(3):
@@ -62,4 +62,4 @@ while True:
             navigate(route[1], left_motor, right_motor, sensors)
         navigate(routes('depot_2_to_start'), left_motor, right_motor, sensors)
         led.value(0)
-        # add function to move into starting zone manually here
+        start_area(left_motor, right_motor, sensors)

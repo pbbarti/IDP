@@ -26,7 +26,7 @@ def pick_up(sensors, left_motor, right_motor, linear_actuator, qr_code_reader, u
         if sensor_state_binary in ['0111', '1110', '1111']:
             left_motor.set_motor("forward", 50)
             right_motor.set_motor("forward", 50)
-            sleep(0.3)  # Adjust this value based on calibration
+            sleep(0.2)  # Adjust this value based on calibration
        
         # Scan for distance
         distance = ultrasound_sensor.read_distance()
