@@ -47,10 +47,7 @@ def drive_forward(sensors_state, left_motor, right_motor, speed):
     right_motor.set_motor(right_action, right_speed)
 
     # action delay
-    if sensor_state_binary in ['0001','1000']:
-        sleep(0.2)
-    else: 
-        sleep(0.11)
+    sleep(0.11)
 
 
 ## This function takes a direction, left motor instance
@@ -70,14 +67,14 @@ def turn_in_place(direction, sensors, left_motor, right_motor):
     else:
         raise ValueError("Invalid direction. Use 'right' or 'left'.")
 
-    sleep(0.6)
+    sleep(1)
 
     while True:
         sensors_state = measure_sensors(*sensors)
         sensor_state_binary = ''.join(map(str, sensors_state))
         if sensor_state_binary in ['0100','0010']:
             break
-        sleep(0.1)  # Small delay
+        sleep(0.11)  # Small delay
 
     sleep(0.2) # small delay to start more straight
     # Stop the motors after turning
@@ -94,20 +91,16 @@ def move_forward_and_turn(direction, sensors, left_motor, right_motor):
 
     # Then turn in place until the sensors read '0100' or '0010' 
     if direction == "right":
-        left_motor.set_motor("forward", 65)
-        right_motor.set_motor("reverse", 0)
+        left_motor.set_motor("forward", 100)
+        right_motor.set_motor("reverse", 20)
     elif direction == "left":
-        left_motor.set_motor("reverse", 0)
-        right_motor.set_motor("forward", 65)
-    else:
-        raise ValueError("Invalid direction. Use 'right' or 'left'.")
-
-    sleep(0.6)
+        left_motor.set_motor("reverse", 20)
+        right_motor.set_motor("forward", 100)
 
     while True:
         sensors_state = measure_sensors(*sensors)
         sensor_state_binary = ''.join(map(str, sensors_state))
-        if sensor_state_binary in ['0100','0010']:
+        if sensor_state_binary in ['0100','0010','0110']:
             break
         sleep(0.1)  # Small delay
     sleep(0.2) # small delay to start more straight

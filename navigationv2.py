@@ -26,17 +26,15 @@ routes = {
 }
 
 # direction to turn once drop off depending on the package destination
-def turn_in_place_direction(qr_message):
+def leave_depot(qr_message):
     if qr_message == "A":
-        return "right"
+        return ["right", 2]
     elif qr_message == "B":
-        return "left"
+        return ["left", 2]
     elif qr_message == "C":
-        return "right"
+        return ["right", 2]
     elif qr_message == "D":
-        return "left"
-    else:
-        return "right"
+        return ["left", 2]
 
 # choose the route based on QR code message
 def choose_route(qr_message):

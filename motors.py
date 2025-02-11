@@ -84,15 +84,6 @@ class Linear_Actuator:
             self.pwm.duty_u16(int(65535))  # always run at max speed
             sleep(extension / self.MAX_SPEED)  # time to achieve the extension
             self.off()
-        else:
-            raise ValueError("Invalid extension. Use a value between 0 and 50.")
-
+            
     def off(self):
         self.pwm.duty_u16(0)
-
-    def fully_retract(self):
-        self.direction_pin.value(0)  # retract
-        self.pwm.duty_u16(int(65535))  # always run at max speed
-        # Assuming it takes 100 units to fully retract
-        sleep(100 / self.MAX_SPEED)
-        self.off()

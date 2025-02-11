@@ -21,9 +21,9 @@ def navigate(directions, left_motor, right_motor, sensors):
                 
                 if direction == 'straight':
                     # Move forward slightly to pass the cross-road
-                    left_motor.set_motor("forward", 50)
-                    right_motor.set_motor("forward", 50)
-                    sleep(0.6)  # Adjust this value based on calibration
+                    left_motor.set_motor("forward", 100)
+                    right_motor.set_motor("forward", 100)
+                    sleep(0.3)  # Adjust this value based on calibration
                     left_motor.off() 
                     right_motor.off()
                 elif direction == 'left':
