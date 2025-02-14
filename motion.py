@@ -49,6 +49,40 @@ def drive_forward(sensors_state, left_motor, right_motor, speed):
     # action delay
     sleep(0.11)
 
+def drive_forward_depot(sensors_state, left_motor, right_motor, speed):
+    # Convert readings to a binary number of sensors states
+    sensor_state_binary = ''.join(map(str, sensors_state))
+    
+    # Define motor actions for each sensor state in a binary map   -  !!!THIS NEEDS TO BE ADJUSTED WITH PHYSICAL CALIBRATION!!!
+    actions = {
+        '0000': ('forward', 0, 'forward', 0), #bad
+        '0001': ('reverse', speed-40, 'reverse', speed), #retract with right wheel to try find path
+        '0010': ('forward', speed, 'forward', speed-40), #correct to right
+        '0011': ('forward', speed, 'forward', speed-40), #correct to right + possible turn right
+        '0100': ('forward', speed-40, 'forward', speed), #correct to left
+        '0101': ('forward', 0, 'forward', 0), #bad
+        '0110': ('forward', speed, 'forward', speed), #forward
+        '0111': ('forward', 0, 'forward', 0), #possible turn right
+        '1000': ('reverse', speed, 'reverse', speed -40), #retract with left wheel to try find path
+        '1001': ('forward', 0, 'forward', 0), #bad
+        '1010': ('forward', 0, 'forward', 0), #bad
+        '1011': ('forward', 0, 'forward', 0), #bad
+        '1100': ('forward', speed-40, 'forward', speed), #correct left + possible turn left
+        '1101': ('forward', 0, 'forward', 0), #bad
+        '1110': ('forward', 0, 'forward', 0), #possible turn left
+        '1111': ('forward', 0, 'forward', 0), #possible turn right or left
+    }
+    
+    # Get the action for the current sensor state
+    left_action, left_speed, right_action, right_speed = actions[sensor_state_binary]
+    
+    # Set the motors based on the action
+    left_motor.set_motor(left_action, left_speed)
+    right_motor.set_motor(right_action, right_speed)
+
+    # action delay
+    sleep(0.09)
+
 
 ## This function takes a direction, left motor instance
 ## and right motor instance as arguments
@@ -59,13 +93,13 @@ def turn_in_place(direction, sensors, left_motor, right_motor):
     # Turn in place until the sensors read '0100' or '0010'
     
     if direction == "right":
-        left_motor.set_motor("forward", 50)
-        right_motor.set_motor("reverse", 50)
+        left_motor.set_motor("forward", 70)
+        right_motor.set_motor("reverse", 70)
     elif direction == "left":
-        left_motor.set_motor("reverse", 50)
-        right_motor.set_motor("forward", 50)
+        left_motor.set_motor("reverse", 70)
+        right_motor.set_motor("forward", 70)
 
-    sleep(1.5)
+    sleep(1.1)
 
     while True:
         sensors_state = measure_sensors(*sensors)
@@ -74,13 +108,13 @@ def turn_in_place(direction, sensors, left_motor, right_motor):
             break
         sleep(0.11)  # Small delay
 
-    sleep(0.2) # small delay to start more straight
+    sleep(0.14) # small delay to start more straight
     # Stop the motors after turning
     left_motor.off()
     right_motor.off()
 
 def move_forward_and_turn(direction, sensors, left_motor, right_motor):
-    calibrated_forward_time = 0.23  # This value should be determined through calibration - !!!THIS NEEDS TO BE ADJUSTED WITH PHYSICAL CALIBRATION!!!
+    calibrated_forward_time = 0.15  # This value should be determined through calibration - !!!THIS NEEDS TO BE ADJUSTED WITH PHYSICAL CALIBRATION!!!
 
     # Move forward first
     left_motor.set_motor("forward", 100)
@@ -90,10 +124,12 @@ def move_forward_and_turn(direction, sensors, left_motor, right_motor):
     # Then turn in place until the sensors read '0100' or '0010' 
     if direction == "right":
         left_motor.set_motor("forward", 100)
-        right_motor.set_motor("reverse", 20)
+        right_motor.set_motor("reverse", 30)
     elif direction == "left":
-        left_motor.set_motor("reverse", 20)
+        left_motor.set_motor("reverse", 30)
         right_motor.set_motor("forward", 100)
+
+    sleep(0.7)
 
     while True:
         sensors_state = measure_sensors(*sensors)
@@ -101,7 +137,6 @@ def move_forward_and_turn(direction, sensors, left_motor, right_motor):
         if sensor_state_binary in ['0100','0010','0110']:
             break
         sleep(0.1)  # Small delay
-    sleep(0.2) # small delay to start more straight
-    # Stop the motors after turning
+    sleep(0.18) # small delay to start more straight
     left_motor.off()
     right_motor.off()

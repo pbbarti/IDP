@@ -84,6 +84,12 @@ class Linear_Actuator:
             self.pwm.duty_u16(int(65535))  # always run at max speed
             sleep(extension / self.MAX_SPEED)  # time to achieve the extension
             self.off()
-            
+    
+    def fully_retract(self):
+        self.direction_pin.value(0)
+        self.pwm.duty_u16(int(65535))
+        sleep(50/self.MAX_SPEED)
+        self.off()
+
     def off(self):
         self.pwm.duty_u16(0)

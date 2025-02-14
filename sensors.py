@@ -37,7 +37,6 @@ class QRCodeReader:
 
         if message_length == 0:
             return None
-
         try:
             message_string = bytearray(message_bytes[0:message_length]).decode("utf-8")
             return message_string
