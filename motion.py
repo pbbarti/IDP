@@ -47,7 +47,7 @@ def drive_forward(sensors_state, left_motor, right_motor, speed):
     right_motor.set_motor(right_action, right_speed)
 
     # action delay
-    sleep(0.11)
+    sleep(0.08)
 
 def drive_forward_depot(sensors_state, left_motor, right_motor, speed):
     # Convert readings to a binary number of sensors states
@@ -137,6 +137,23 @@ def move_forward_and_turn(direction, sensors, left_motor, right_motor):
         if sensor_state_binary in ['0100','0010','0110']:
             break
         sleep(0.1)  # Small delay
-    sleep(0.18) # small delay to start more straight
+    sleep(0.13) # small delay to start more straight
+    left_motor.off()
+    right_motor.off()
+
+
+def turn_in_place_depot(direction, left_motor, right_motor):
+    
+    # Turn in place until the sensors read '0100' or '0010'
+    
+    if direction == "right":
+        left_motor.set_motor("forward", 70)
+        right_motor.set_motor("reverse", 70)
+    elif direction == "left":
+        left_motor.set_motor("reverse", 70)
+        right_motor.set_motor("forward", 70)
+
+    sleep(2.2) # adjust this value based on calibration
+
     left_motor.off()
     right_motor.off()

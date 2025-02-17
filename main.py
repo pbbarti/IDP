@@ -1,7 +1,7 @@
 from sensors import LineFollowingSensor, QRCodeReader, UltrasoundSensor
 from motors import Motor_Right, Motor_Left, Linear_Actuator
-from navigation import navigate,  routes, choose_route, leave_depot, start_area
-from motion import measure_sensors, drive_forward, turn_in_place
+from navigation import navigate,  routes, choose_route, leave_depot, start_area, start_area_finish
+from motion import measure_sensors, drive_forward, turn_in_place, turn_in_place_depot
 from drop_off import drop_off
 from pick_up import pick_up
 from machine import Pin, I2C
@@ -41,7 +41,6 @@ def callback(button):
 
 button.irq(trigger=Pin.IRQ_RISING, handler=callback)
 
-#linear_actuator.set_actuator(1)
 led.value(0)
 
 while True:
@@ -50,35 +49,34 @@ while True:
         start_area(left_motor, right_motor, sensors)
         led.value(1)
         navigate(routes['start_to_depot_1'], left_motor, right_motor, sensors)
-        for i in range(2):
-            if i > 2:
+        for i in range(4):
+            if i >= 2:  ### TURN IN PLACE FOR DEPOT IS TOO LITTLE ###
                 left_motor.set_motor('forward',80)
                 right_motor.set_motor('forward',80)
-                sleep(1.1)
+                sleep(0.6)
+                right_motor.off()
+                left_motor.off()
             qr_message = pick_up(sensors, left_motor, right_motor, linear_actuator, qr_code_reader, ultrasound_sensor)
             route = choose_route(qr_message)
-            if i > 2:
-                navigate('straight',left_motor, right_motor, sensors)
+            if i >= 2:
+                left_motor.set_motor('forward',80)
+                right_motor.set_motor('forward',80)
+                sleep(1)
+                left_motor.off()
+                right_motor.off()
             navigate(route[0], left_motor, right_motor, sensors)
             drop_off(sensors, left_motor, right_motor, linear_actuator, leave_depot(qr_message)[0], leave_depot(qr_message)[1])
             navigate(route[1], left_motor, right_motor, sensors)
         left_motor.set_motor('forward',80)
         right_motor.set_motor('forward',80)
-        sleep(1.5)
-        turn_in_place('right', sensors, left_motor, right_motor)
-        navigate(routes['depot_1_to_start'], left_motor, right_motor, sensors)
-        led.value(0)
-        left_motor.set_motor('forward',70)
-        right_motor.set_motor('forward',70)
         sleep(1)
         left_motor.off()
         right_motor.off()
-#         #for i in range(3):
-#             #qr_message = pick_up(sensors, left_motor, right_motor, linear_actuator, qr_code_reader, ultrasound_sensor)
-#             #route = choose_route(qr_message)
-#             #navigate(route[0], left_motor, right_motor, sensors)
-#             #drop_off(sensors, left_motor, right_motor, linear_actuator, leave_depot(qr_message)[0], leave_depot(qr_message)[1])
-#             #navigate(route[1], left_motor, right_motor, sensors)
-#         #navigate(routes('depot_2_to_start'), left_motor, right_motor, sensors)
-#         #led.value(0)
-#         #start_area(left_motor, right_motor, sensors)
+        turn_in_place_depot('right', left_motor, right_motor)
+        left_motor.set_motor("forward", 80)
+        right_motor.set_motor("forward", 80)
+        sleep(0.7)  # Adjust this value based on calibration
+        navigate(routes['depot_1_to_start'], left_motor, right_motor, sensors)
+        led.value(0)
+        start_area_finish(left_motor, right_motor)
+

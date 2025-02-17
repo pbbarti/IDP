@@ -66,7 +66,7 @@ def leave_depot(qr_message):
     elif qr_message == "C":
         return ["left", 1.4]
     elif qr_message == "D":
-        return ["left", 1]
+        return ["left", 1.2]
 
 # function to choose the route based on QR code message
 def choose_route(qr_message):
@@ -95,3 +95,10 @@ def start_area(left_motor, right_motor, sensors):
                 left_motor.off()
                 right_motor.off()
                 break
+
+def start_area_finish(left_motor, right_motor):
+        left_motor.set_motor('forward',70)
+        right_motor.set_motor('forward',70)
+        sleep(1)
+        left_motor.off()
+        right_motor.off()

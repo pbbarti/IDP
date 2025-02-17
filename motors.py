@@ -19,9 +19,9 @@ class Motor_Right:
 
     def set_motor(self, direction, speed):
         if direction == "forward":
-            self.m1Dir.value(0) # forward = 0 reverse = 1 
+            self.m1Dir.value(1) # forward = 1 reverse = 0 
         elif direction == "reverse":
-            self.m1Dir.value(1)
+            self.m1Dir.value(0)
         else:
             raise ValueError("Invalid direction. Use 'forward' or 'reverse'.")
         
@@ -42,10 +42,10 @@ class Motor_Left:
         self.pwm1.duty_u16(0) # set duty cycle
 
     def set_motor(self, direction, speed):
-        if direction == "forward": #forward = 1 reverse = 0
-            self.m1Dir.value(1)  
+        if direction == "forward": #forward = 0 reverse = 1
+            self.m1Dir.value(0)  
         elif direction == "reverse":
-            self.m1Dir.value(0)
+            self.m1Dir.value(1)
         else:
             raise ValueError("Invalid direction. Use 'forward' or 'reverse'.")
         

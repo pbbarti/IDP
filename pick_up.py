@@ -1,14 +1,14 @@
-from motion import measure_sensors, drive_forward_depot, turn_in_place
+from motion import measure_sensors, drive_forward_depot, turn_in_place_depot
 from time import sleep
 
 def pick_up(sensors, left_motor, right_motor, linear_actuator, qr_code_reader, ultrasound_sensor):
 
-    linear_actuator.fully_retract()
-    # Move forward slowly and scan for QR code
+    linear_actuator.set_actuator(-20)  
     left_motor.set_motor("reverse", 70)
     right_motor.set_motor("reverse", 70)
     sleep(0.7)  # Adjust this value based on calibration
 
+    # Move forward slowly and scan for QR code
     while True:
         #adjust to straight first
         sensors_state = measure_sensors(*sensors)
@@ -47,7 +47,7 @@ def pick_up(sensors, left_motor, right_motor, linear_actuator, qr_code_reader, u
             break
 
     # Turn around
-    turn_in_place('right', sensors, left_motor, right_motor)
+    turn_in_place_depot('right', left_motor, right_motor)
 
     # Reverse a bit
     left_motor.set_motor("reverse", 70)
@@ -61,5 +61,6 @@ def pick_up(sensors, left_motor, right_motor, linear_actuator, qr_code_reader, u
 # qr_code_reader = QRCodeReader(i2c, 0x0C)
 # ultrasound_sensor = UltrasoundSensor(pin=26)
 # pick_up(sensors, left_motor, right_motor, linear_actuator, qr_code_reader, ultrasound_sensor)
+
 
 
