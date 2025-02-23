@@ -87,7 +87,7 @@ while True:
             if i >= 2:
                 left_motor.set_motor('forward',80)
                 right_motor.set_motor('forward',80)
-                sleep(1)
+                sleep(0.8)
                 left_motor.off()
                 right_motor.off()
             
@@ -111,11 +111,6 @@ while True:
         # Turn in place to face depot_1 leaving
         turn_in_place_depot('right', left_motor, right_motor)
 
-        # Additional alinging in depot is necessary for proper navigation
-        left_motor.set_motor("forward", 80)
-        right_motor.set_motor("forward", 80)
-        sleep(0.7)
-
         # Navigate back to the start area from depot_1
         navigate(routes['depot_1_to_start'], left_motor, right_motor, sensors)
 
@@ -124,4 +119,3 @@ while True:
 
         # Return to the start area and stop the robot
         start_area_finish(left_motor, right_motor)
-

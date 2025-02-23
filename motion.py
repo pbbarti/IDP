@@ -177,7 +177,7 @@ def turn_in_place_depot(direction, left_motor, right_motor):
         right_motor.set_motor("forward", 70)
 
     # Delay calibrated manually to ensure 180 degree turn
-    sleep(2.2)
+    sleep(2.4)
 
     # Stop the motors after turning
     left_motor.off()
